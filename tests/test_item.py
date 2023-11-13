@@ -3,6 +3,7 @@ from src.item import Item
 
 item1 = Item("Умная колонка", 4999, 40)
 item2 = Item('Телефон', 10000, 5)
+item3 = Item("Смартфон", 10000, 20)
 Item.pay_rate = 0.9
 
 
@@ -34,3 +35,11 @@ def test_string_to_number():
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.0') == 5
     assert Item.string_to_number('5.5') == 5
+
+
+def test_repr():
+    assert repr(item3) == "Item('Смартфон', 10000, 20)"
+
+
+def test_str():
+    assert str(item3) == 'Смартфон'
