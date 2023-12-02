@@ -1,5 +1,7 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-from src.item import Item
+import pytest
+
+from src.item import Item, InstantiateCSVError
 
 item1 = Item("Умная колонка", 4999, 40)
 item2 = Item('Телефон', 10000, 5)
@@ -27,7 +29,7 @@ def test_name_len13():
 
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv('src/items.csv')
+    Item.instantiate_from_csv()
     assert len(Item.all) == 5
 
 
@@ -43,3 +45,17 @@ def test_repr():
 
 def test_str():
     assert str(item3) == 'Смартфон'
+
+
+def test_empty_csv():
+    """Тестирование ненайденного файла"""
+    file_name = 'src/none.csv'
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(file_name)
+
+
+def test_broken_csv():
+    """Тестирование поврежденного файла"""
+    file_name = 'tests/test_items.csv'
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(file_name)
